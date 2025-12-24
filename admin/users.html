@@ -1,136 +1,241 @@
-<!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users - Admin U WINFLY</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Users Management - U WINFLY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="icon" href="../assets/image/logo.jpg" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#10a24b",
-                        "primary-dark": "#0d8a3f",
-                        "background-light": "#f6f8f7",
-                        "background-dark": "#112117",
-                    },
-                },
-            },
-        }
-    </script>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar bg-white dark:bg-neutral-900 border-r border-gray-200 dark:border-neutral-800">
-        <div class="p-6 border-b border-gray-200 dark:border-neutral-800">
-            <div class="flex items-center gap-2">
-                <img src="../assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto">
-                <h2 class="text-xl font-black tracking-tighter">U WINFLY</h2>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Admin Panel</p>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../AdminLTE-4.0.0-rc4/dist/css/adminlte.css" />
+  </head>
+  <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+    <div class="app-wrapper">
+      <nav class="app-header navbar navbar-expand bg-body">
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                <i class="bi bi-list"></i>
+              </a>
+            </li>
+            <li class="nav-item d-none d-md-block"><a href="../index.html" class="nav-link">Home</a></li>
+            <li class="nav-item d-none d-md-block"><a href="../catalog.html" class="nav-link">Catalog</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <span class="nav-link" id="user-name">Loading...</span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="handleLogout(); return false;" role="button">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            </li>
+          </ul>
         </div>
-        <nav class="p-4 space-y-2">
-            <a href="index.html" class="admin-nav-item">
-                <span class="material-symbols-outlined">dashboard</span>
-                <span>Dashboard</span>
-            </a>
-            <a href="products.html" class="admin-nav-item">
-                <span class="material-symbols-outlined">inventory</span>
-                <span>Products</span>
-            </a>
-            <a href="orders.html" class="admin-nav-item">
-                <span class="material-symbols-outlined">shopping_cart</span>
-                <span>Orders</span>
-            </a>
-            <a href="users.html" class="admin-nav-item active">
-                <span class="material-symbols-outlined">people</span>
-                <span>Users</span>
-            </a>
-            <a href="../index.html" class="admin-nav-item">
-                <span class="material-symbols-outlined">home</span>
-                <span>Back to Site</span>
-            </a>
-        </nav>
-    </aside>
-
-    <div class="admin-main">
-        <header class="admin-header bg-white dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800">
-            <div class="flex items-center justify-between px-6 py-4">
-                <h1 class="text-2xl font-bold">Users Management</h1>
-                <div class="flex items-center gap-4">
-                    <span class="text-sm text-gray-600 dark:text-gray-400" id="user-name">Loading...</span>
-                    <button onclick="handleLogout()" class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
-                        <span class="material-symbols-outlined text-sm">logout</span>
-                        <span>Logout</span>
-                    </button>
-                </div>
+      </nav>
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <div class="sidebar-brand">
+          <a href="index.html" class="brand-link">
+            <img
+              src="../assets/image/logo.jpg"
+              alt="U WINFLY Logo"
+              class="brand-image opacity-75 shadow"
+              style="object-fit: contain; padding: 8px;"
+            />
+            <span class="brand-text fw-light">U WINFLY Admin</span>
+          </a>
+        </div>
+        <div class="sidebar-wrapper">
+          <nav class="mt-2">
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam"></i>
+                  <p>Products</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                  <i class="nav-icon bi bi-cart"></i>
+                  <p>Orders</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="users.html" class="nav-link active">
+                  <i class="nav-icon bi bi-people"></i>
+                  <p>Users</p>
+                </a>
+              </li>
+              <li class="nav-header">NAVIGATION</li>
+              <li class="nav-item">
+                <a href="../index.html" class="nav-link">
+                  <i class="nav-icon bi bi-house"></i>
+                  <p>Back to Site</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-main">
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">Users Management</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                  <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                  <li class="breadcrumb-item active">Users</li>
+                </ol>
+              </div>
             </div>
-        </header>
-
-        <main class="admin-content p-6">
-            <div class="admin-card">
-                <h2 class="text-xl font-bold mb-4">All Users</h2>
-                <div id="users-list" class="space-y-4">
-                    <!-- Users will be loaded here -->
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">All Users</h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="users-list" class="table-responsive">
+                      <!-- Users will be loaded here -->
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </main>
+          </div>
+        </div>
+      </main>
+      <footer class="app-footer">
+        <div class="float-end d-none d-sm-inline">U WINFLY Admin Panel</div>
+        <strong>Copyright &copy; 2024 <a href="../index.html" class="text-decoration-none">U WINFLY</a>.</strong> All rights reserved.
+      </footer>
     </div>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../AdminLTE-4.0.0-rc4/dist/js/adminlte.js"></script>
+    <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (sidebarWrapper && OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined) {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+    </script>
     <script src="../assets/js/auth.js"></script>
     <script src="assets/js/admin.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!requireAuth()) return;
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!requireAuth()) return;
 
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
-            }
+        const user = getCurrentUser();
+        if (user) {
+          document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
+        }
 
-            // Load users
-            const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
-            const container = document.getElementById('users-list');
+        // Load users
+        const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
+        const container = document.getElementById('users-list');
 
-            if (users.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400">No users found.</p>';
-                return;
-            }
+        if (users.length === 0) {
+          container.innerHTML = '<p class="text-muted">No users found.</p>';
+          return;
+        }
 
-            users.forEach(userData => {
-                const userEl = document.createElement('div');
-                userEl.className = 'flex items-center gap-4 p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg';
+        let tableHTML = `
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th style="width: 50px;">#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Registered</th>
+                <th style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
 
-                const createdAt = new Date(userData.createdAt).toLocaleDateString('id-ID');
+        users.forEach((userData, index) => {
+          const createdAt = new Date(userData.createdAt).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
 
-                userEl.innerHTML = `
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary">person</span>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-bold">${userData.name}</h4>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">${userData.email}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">Registered: ${createdAt}</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
-                        <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                    </div>
-                `;
-
-                container.appendChild(userEl);
-            });
+          tableHTML += `
+            <tr>
+              <td>${index + 1}</td>
+              <td><strong>${userData.name}</strong></td>
+              <td>${userData.email}</td>
+              <td>${createdAt}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          `;
         });
+
+        tableHTML += `
+            </tbody>
+          </table>
+        `;
+
+        container.innerHTML = tableHTML;
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -22,5 +22,6 @@ nama toko: Ebike.ID / Ebike Store
 - Table : List Data dengan Pencarian Upload source code di github
 - AdminLTE - Admin Template Bootstrap
 
-https://www.uwinflyofficial.id/
-https://shopee.co.id/uwinfly?categoryId=100641&entryPoint=ShopByPDP&itemId=24661724199
+### referensi
+- https://www.uwinflyofficial.id/
+- https://shopee.co.id/uwinfly?categoryId=100641&entryPoint=ShopByPDP&itemId=24661724199
