@@ -1,0 +1,112 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "U WINFLY T60",
+      "category": "Sepeda Listrik",
+      "price": 3799000,
+      "rating": 4.9,
+      "sold": 3000,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_T60.webp",
+      "link": "https://shopee.co.id/U-WINFLY-T60-sepeda-listrik-i.102598934.27456299396",
+      "description": "Sepeda listrik dengan desain modern, cocok untuk perjalanan harian di kota."
+    },
+    {
+      "id": 2,
+      "name": "U WINFLY M70",
+      "category": "Sepeda Listrik",
+      "price": 4299000,
+      "rating": 4.8,
+      "sold": 645,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_M70.webp",
+      "link": "https://shopee.co.id/U-WINFLY-M70-(NEW-PRODUCT)-i.102598934.25916620955",
+      "description": "Produk terbaru dengan fitur canggih dan performa tinggi."
+    },
+    {
+      "id": 3,
+      "name": "U-Winfly T85",
+      "category": "Motor Listrik",
+      "price": 9799000,
+      "rating": 4.8,
+      "sold": 111,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_T85.webp",
+      "link": "https://shopee.co.id/-PROMO-SPECIAL-LAUNCHING-U-Winfly-T85-Motor-Listrik-i.102598934.42306798349",
+      "description": "Motor listrik dengan promo spesial launching, performa maksimal untuk perjalanan jauh."
+    },
+    {
+      "id": 4,
+      "name": "UWINFLY T78B",
+      "category": "Sepeda Listrik",
+      "price": 5999000,
+      "rating": 4.8,
+      "sold": 120,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_T78B_LITHIUM.webp",
+      "link": "https://shopee.co.id/NEW-PRODUCT-UWINFLY-T78B-LITHIUM-FAST-CHARGING-1-5JAM-SWAP-BATERAI-i.102598934.43077159655",
+      "description": "Fast charging 1.5 jam dengan teknologi swap baterai, solusi praktis untuk mobilitas Anda."
+    },
+    {
+      "id": 5,
+      "name": "U WINFLY M75",
+      "category": "Sepeda Listrik",
+      "price": 5498999,
+      "rating": 4.8,
+      "sold": 147,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_M75.webp",
+      "link": "https://shopee.co.id/U-WINFLY-Sepeda-Listrik-M75-i.102598934.27750639525",
+      "description": "Sepeda listrik dengan keseimbangan sempurna antara performa dan harga."
+    },
+    {
+      "id": 6,
+      "name": "U-Winfly M100",
+      "category": "Motor Listrik",
+      "price": 17990000,
+      "rating": 4.6,
+      "sold": 177,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_M100.webp",
+      "link": "https://shopee.co.id/U-Winfly-M100-Motor-Listrik-i.102598934.27475033296",
+      "description": "Motor listrik premium dengan performa tinggi, cocok untuk perjalanan jarak jauh."
+    },
+    {
+      "id": 7,
+      "name": "U-Winfly T90",
+      "category": "Motor Listrik",
+      "price": 12589000,
+      "rating": 4.7,
+      "sold": 125,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_T90.webp",
+      "link": "https://shopee.co.id/U-Winfly-T90-Motor-Listrik-i.102598934.29875043230",
+      "description": "Motor listrik dengan desain sporty dan teknologi terdepan."
+    },
+    {
+      "id": 8,
+      "name": "UWINFLY M110G",
+      "category": "Motor Listrik",
+      "price": 13999000,
+      "rating": 4.8,
+      "sold": 53,
+      "stock": "available",
+      "image": "assets/image/catalog/U_WINFLY_M110G.webp",
+      "link": "https://shopee.co.id/NEW-PRODUK-UWINFLY-M110G-FAST-CHARGING-SWAB-BATERAI-i.102598934.55103365346",
+      "description": "Produk baru dengan fast charging dan teknologi swap baterai terbaru."
+    },
+    {
+      "id": 9,
+      "name": "U WINFLY T80",
+      "category": "Motor Listrik",
+      "price": 6599000,
+      "rating": 4.8,
+      "sold": 150,
+      "stock": "out_of_stock",
+      "image": "assets/image/catalog/U_WINFLY_T80.webp",
+      "link": "https://shopee.co.id/U-WINFLY-Motor-Listrik-T80-i.102598934.24661724199",
+      "description": "Motor listrik dengan harga terjangkau dan performa handal."
+    }
+  ]
+}

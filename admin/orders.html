@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Admin U WINFLY</title>
+    <link rel="icon" href="../assets/image/logo.jpg" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#10a24b",
+                        "primary-dark": "#0d8a3f",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar bg-white dark:bg-neutral-900 border-r border-gray-200 dark:border-neutral-800">
+        <div class="p-6 border-b border-gray-200 dark:border-neutral-800">
+            <div class="flex items-center gap-2">
+                <img src="../assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto">
+                <h2 class="text-xl font-black tracking-tighter">U WINFLY</h2>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Admin Panel</p>
+        </div>
+        <nav class="p-4 space-y-2">
+            <a href="index.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">inventory</span>
+                <span>Products</span>
+            </a>
+            <a href="orders.html" class="admin-nav-item active">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span>Orders</span>
+            </a>
+            <a href="users.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">people</span>
+                <span>Users</span>
+            </a>
+            <a href="../index.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">home</span>
+                <span>Back to Site</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-header bg-white dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800">
+            <div class="flex items-center justify-between px-6 py-4">
+                <h1 class="text-2xl font-bold">Orders Management</h1>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600 dark:text-gray-400" id="user-name">Loading...</span>
+                    <button onclick="handleLogout()" class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-sm">logout</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-content p-6">
+            <div class="admin-card">
+                <h2 class="text-xl font-bold mb-4">All Orders</h2>
+                <div class="text-center py-12 text-gray-500 dark:text-gray-400">
+                    <span class="material-symbols-outlined text-6xl mb-4 block">shopping_cart</span>
+                    <p>No orders yet. Orders will appear here when customers make purchases.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAuth()) return;
+
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
+            }
+        });
+    </script>
+</body>
+</html>

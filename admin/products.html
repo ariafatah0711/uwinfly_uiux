@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Admin U WINFLY</title>
+    <link rel="icon" href="../assets/image/logo.jpg" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#10a24b",
+                        "primary-dark": "#0d8a3f",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar bg-white dark:bg-neutral-900 border-r border-gray-200 dark:border-neutral-800">
+        <div class="p-6 border-b border-gray-200 dark:border-neutral-800">
+            <div class="flex items-center gap-2">
+                <img src="../assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto">
+                <h2 class="text-xl font-black tracking-tighter">U WINFLY</h2>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Admin Panel</p>
+        </div>
+        <nav class="p-4 space-y-2">
+            <a href="index.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="admin-nav-item active">
+                <span class="material-symbols-outlined">inventory</span>
+                <span>Products</span>
+            </a>
+            <a href="orders.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span>Orders</span>
+            </a>
+            <a href="users.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">people</span>
+                <span>Users</span>
+            </a>
+            <a href="../index.html" class="admin-nav-item">
+                <span class="material-symbols-outlined">home</span>
+                <span>Back to Site</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-header bg-white dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800">
+            <div class="flex items-center justify-between px-6 py-4">
+                <h1 class="text-2xl font-bold">Products Management</h1>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600 dark:text-gray-400" id="user-name">Loading...</span>
+                    <button onclick="handleLogout()" class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-sm">logout</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-content p-6">
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold">All Products</h2>
+                    <button class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium">
+                        <span class="material-symbols-outlined text-sm align-middle">add</span> Add Product
+                    </button>
+                </div>
+                <div id="products-list" class="space-y-4">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAuth()) return;
+
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
+            }
+
+            // Load products
+            fetch('../data.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('products-list');
+                    if (!container) return;
+
+                    const products = data.products || [];
+
+                    if (products.length === 0) {
+                        container.innerHTML = '<p class="text-gray-500">No products found.</p>';
+                        return;
+                    }
+
+                    products.forEach(product => {
+                        const productEl = document.createElement('div');
+                        productEl.className = 'flex items-center gap-4 p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg';
+
+                        const priceFormatted = new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            minimumFractionDigits: 0,
+                        }).format(product.price);
+
+                        productEl.innerHTML = `
+                            <div class="w-20 h-20 bg-gray-200 dark:bg-neutral-700 rounded-lg bg-cover bg-center"
+                                 style="background-image: url('../${product.image}')"></div>
+                            <div class="flex-1">
+                                <h4 class="font-bold">${product.name}</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${product.category} • ${product.description}</p>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <span class="text-sm">⭐ ${product.rating}</span>
+                                    <span class="text-sm">${product.sold} terjual</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold mb-2">${priceFormatted}</p>
+                                <span class="text-xs px-2 py-1 rounded ${
+                                    product.stock === 'available'
+                                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                                }">
+                                    ${product.stock === 'available' ? 'Available' : 'Out of Stock'}
+                                </span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        `;
+
+                        container.appendChild(productEl);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                });
+        });
+    </script>
+</body>
+</html>
