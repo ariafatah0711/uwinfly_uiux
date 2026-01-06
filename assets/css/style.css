@@ -1,0 +1,32 @@
+body {
+    font-family: "Inter", sans-serif;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Fix scroll offset for anchor links with sticky navbar */
+html {
+    scroll-padding-top: 1rem;
+    /* 50px - navbar height + extra padding */
+}
+
+section[id] {
+    scroll-margin-top: 1rem;
+    /* 50px - navbar height + extra padding */
+}
+
+/* catalog */
+body {
+    font-family: "Inter", sans-serif;
+}

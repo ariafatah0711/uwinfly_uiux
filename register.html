@@ -133,16 +133,26 @@
                 // Auto login after registration
                 const loginResult = login(email, password);
                 if (loginResult.success) {
-                    window.location.href = 'admin/index.html';
+                    const user = loginResult.user || getCurrentUser();
+                    if (user && user.role === 'admin') {
+                        window.location.href = 'admin/index.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 }
             } else {
                 alert(result.message);
             }
         });
 
-        // Check if already logged in
+        // Check if already logged in and redirect based on role
         if (isLoggedIn()) {
-            window.location.href = 'admin/index.html';
+            const u = getCurrentUser();
+            if (u && u.role === 'admin') {
+                window.location.href = 'admin/index.html';
+            } else {
+                window.location.href = 'index.html';
+            }
         }
     </script>
 </body>

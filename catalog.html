@@ -203,22 +203,25 @@
       document.addEventListener("DOMContentLoaded", function () {
         const authNav = document.getElementById("auth-nav");
         if (authNav) {
-          if (isLoggedIn()) {
+            if (isLoggedIn()) {
             const user = getCurrentUser();
-            authNav.innerHTML = `
-                        <a href="admin/index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors">
-                            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
-                            <span class="text-sm">Admin</span>
-                        </a>
-                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800">
-                            <span class="material-symbols-outlined text-sm text-gray-600 dark:text-gray-400">person</span>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${user.name}</span>
-                        </div>
-                        <button onclick="handleNavLogout()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">
-                            <span class="material-symbols-outlined text-sm">logout</span>
-                            <span class="text-sm">Logout</span>
-                        </button>
-                    `;
+            let adminLink = '';
+            if (typeof isAdmin === 'function' && isAdmin()) {
+              adminLink = `
+                  <a href="admin/index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors">
+                    <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+                    <span class="text-sm">Admin</span>
+                  </a>`;
+            }
+            authNav.innerHTML = `${adminLink}
+                  <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800">
+                    <span class="material-symbols-outlined text-sm text-gray-600 dark:text-gray-400">person</span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${user.name}</span>
+                  </div>
+                  <button onclick="handleNavLogout()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span class="text-sm">Logout</span>
+                  </button>`;
           } else {
             authNav.innerHTML = `
                         <a href="login.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">

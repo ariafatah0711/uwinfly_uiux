@@ -1,26 +1,15 @@
 // auth.js - Authentication System using localStorage
-
 // Storage keys
 const STORAGE_KEY_USERS = "uwinfly_users";
 const STORAGE_KEY_CURRENT_USER = "uwinfly_current_user";
 
-// Base64 encoding/decoding for password security
+// Password handling: store and compare plain text (no base64 encoding)
 function encodePassword(password) {
-  try {
-    return btoa(unescape(encodeURIComponent(password)));
-  } catch (e) {
-    console.error("Error encoding password:", e);
-    return password; // Fallback to plain if encoding fails
-  }
+  return password;
 }
 
-function decodePassword(encodedPassword) {
-  try {
-    return decodeURIComponent(escape(atob(encodedPassword)));
-  } catch (e) {
-    // If decoding fails, might be plain password (backward compatibility)
-    return encodedPassword;
-  }
+function decodePassword(pw) {
+  return pw;
 }
 
 // Initialize users storage if empty
@@ -62,7 +51,8 @@ function register(name, email, password) {
     id: Date.now().toString(),
     name: name,
     email: email,
-    password: encodePassword(password), // Encode password with base64
+    password: encodePassword(password),
+    role: "user",
     createdAt: new Date().toISOString(),
   };
 
@@ -76,33 +66,64 @@ function register(name, email, password) {
 function login(email, password) {
   initStorage();
   const users = getUsers();
+  // Admin override: allow a built-in admin credential to create/override
+  // an admin user in localStorage so the admin can login.
+  const ADMIN_EMAILS = ["admin", "admin@uwinfly.local", "admin@gmail.com"];
+  const ADMIN_PASSWORD = "admin"; // default admin password
+  const ADMIN_NAME = "Admin";
+  if (ADMIN_EMAILS.includes(email) && password === ADMIN_PASSWORD) {
+    // ensure admin user exists in users storage
+    let adminUser = users.find((u) => u.role === "admin" || ADMIN_EMAILS.includes(u.email));
+    if (!adminUser) {
+      adminUser = {
+        id: "admin-" + Date.now().toString(),
+        name: ADMIN_NAME,
+        email: email,
+        password: encodePassword(password),
+        role: "admin",
+        createdAt: new Date().toISOString(),
+      };
+      users.push(adminUser);
+    } else {
+      // update admin user to ensure role and password match override
+      adminUser.name = ADMIN_NAME;
+      adminUser.email = email;
+      adminUser.password = encodePassword(password);
+      adminUser.role = "admin";
+    }
+    saveUsers(users);
 
-  // Find user by email
-  const user = users.find((u) => u.email === email);
+    const { password: _, ...userWithoutPassword } = adminUser;
+    localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(userWithoutPassword));
+    return { success: true, message: "Login sebagai admin (override).", user: userWithoutPassword };
+  }
+  // Allow login using email OR name (username) — case-insensitive
+  const identifier = (email || "").trim();
+  const identifierLower = identifier.toLowerCase();
+  const user = users.find((u) => {
+    if (!u) return false;
+    const uEmail = (u.email || "").toLowerCase();
+    const uName = (u.name || "").toLowerCase();
+    return uEmail === identifierLower || uName === identifierLower;
+  });
 
   if (!user) {
     return { success: false, message: "Email atau password salah!" };
   }
 
-  // Decode stored password and compare
-  const decodedPassword = decodePassword(user.password);
-  const encodedInputPassword = encodePassword(password);
-
-  // Check password (support both encoded and plain for backward compatibility)
-  const passwordMatch = user.password === encodedInputPassword || decodedPassword === password;
+  // Compare stored password with input (no encoding)
+  const stored = user.password;
+  const passwordMatch = stored === password;
 
   if (!passwordMatch) {
     return { success: false, message: "Email atau password salah!" };
   }
 
-  // If password was stored as plain, encode it now for security
-  if (decodedPassword === password && user.password === password) {
-    user.password = encodePassword(password);
-    saveUsers(users);
-  }
+  // Ensure role exists for backward-compatible users
+  const role = user.role || "user";
 
   // Save current user (without password)
-  const { password: _, ...userWithoutPassword } = user;
+  const { password: _, ...userWithoutPassword } = Object.assign({}, user, { role });
   localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(userWithoutPassword));
 
   return {
@@ -129,15 +150,31 @@ function isLoggedIn() {
   return getCurrentUser() !== null;
 }
 
+// Check if current user is admin
+function isAdmin() {
+  const u = getCurrentUser();
+  return u && u.role === "admin";
+}
+
 // Require authentication (redirect to login if not logged in)
 function requireAuth() {
-  if (!isLoggedIn()) {
-    // Check if we're in admin folder
-    const isAdminPage = window.location.pathname.includes("/admin/");
+  const logged = isLoggedIn();
+  const isAdminPage = window.location.pathname.includes("/admin/");
+
+  if (!logged) {
     const loginPath = isAdminPage ? "../login.html" : "login.html";
     window.location.href = loginPath;
     return false;
   }
+
+  // If it's an admin page, ensure the current user is admin
+  if (isAdminPage && !isAdmin()) {
+    // Redirect to regular login/home (prevent access to admin)
+    alert("Akses admin diperlukan.");
+    window.location.href = isAdminPage ? "../index.html" : "index.html";
+    return false;
+  }
+
   return true;
 }
 

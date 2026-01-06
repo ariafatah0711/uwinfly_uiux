@@ -1,460 +1,397 @@
 <!DOCTYPE html>
 
 <html class="light" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>U WINFLY - Ride the Future</title>
-    <!-- Favicon -->
-    <link rel="icon" href="assets/image/logo.jpg" type="image/png" />
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
-    <!-- Material Icons -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Theme Configuration -->
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#10a24b",
-              "primary-dark": "#0d8a3f",
-              "background-light": "#f6f8f7",
-              "background-dark": "#112117",
-              accent: "#e7f3ec",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-              body: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>U WINFLY - Ride the Future</title>
+  <!-- Favicon -->
+  <link rel="icon" href="assets/image/logo.jpg" type="image/png" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
+  <!-- Material Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Theme Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#10a24b",
+            "primary-dark": "#0d8a3f",
+            "background-light": "#f6f8f7",
+            "background-dark": "#112117",
+            accent: "#e7f3ec",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "1rem",
+            xl: "1.5rem",
+            full: "9999px",
           },
         },
-      };
-    </script>
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
 
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-
-      /* Hide scrollbar for IE, Edge and Firefox */
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        /* IE and Edge */
-        scrollbar-width: none;
-        /* Firefox */
-      }
-
-      /* Fix scroll offset for anchor links with sticky navbar */
-      html {
-        scroll-padding-top: 1rem; /* 50px - navbar height + extra padding */
-      }
-
-      section[id] {
-        scroll-margin-top: 1rem; /* 50px - navbar height + extra padding */
-      }
-    </style>
-  </head>
-
-  <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
-    <!-- Sticky Navigation Bar -->
-    <header
-      class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <!-- Logo -->
-          <div class="flex items-center gap-2">
-            <a href="index.html" class="flex items-center gap-2">
-              <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto" />
-              <h2 class="text-xl font-black tracking-tighter text-slate-900 dark:text-white">U WINFLY</h2>
-            </a>
-          </div>
-          <!-- Desktop Nav -->
-          <nav class="hidden md:flex items-center gap-6">
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">Home</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="catalog.html">Catalog</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#contact">Contact</a>
-            <div id="auth-nav" class="flex items-center gap-3 ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
-              <!-- Auth links will be dynamically inserted here -->
-            </div>
-          </nav>
-          <!-- Mobile Menu -->
-          <button class="md:hidden p-2 text-slate-600 dark:text-gray-300 hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">menu</span>
-          </button>
-        </div>
-      </div>
-    </header>
-    <main class="flex flex-col w-full">
-      <!-- Hero Section -->
-      <section
-        class="relative w-full min-h-[90vh] flex items-center bg-cover bg-center bg-no-repeat"
-        style="background-image: url('assets/image/hero/2.png')"
-      >
-        <!-- Simple Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
-        <!-- Content -->
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div class="max-w-2xl">
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight text-white mb-6">
-              Ride the Future. <span class="text-primary">Zero Emissions.</span>
-            </h1>
-            <p class="text-lg text-gray-200 mb-8">
-              Experience the ultimate freedom with U WINFLY. Engineered for power, designed for comfort, and built for a
-              sustainable tomorrow. Up to 80km range on a single charge.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4">
-              <button class="bg-primary hover:bg-primary-dark text-white font-bold h-14 px-8 rounded-xl transition-colors">
-                Explore Models
-              </button>
-              <button class="bg-white/90 hover:bg-white text-slate-900 font-bold h-14 px-8 rounded-xl transition-colors">
-                Watch Video
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Advantages Section -->
-      <section class="py-16 bg-white dark:bg-background-dark/50" id="features">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl font-bold tracking-tight mb-4">Why Choose U WINFLY?</h2>
-            <p class="text-slate-600 dark:text-gray-400">
-              We don't just sell bikes; we sell a lifestyle upgrade. Check out what makes our models stand out from the
-              competition.
-            </p>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
-            <div
-              class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group"
-            >
-              <div
-                class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform"
-              >
-                <span class="material-symbols-outlined">battery_charging_full</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Long Range Battery</h3>
-              <p class="text-sm text-slate-600 dark:text-gray-400">
-                Go further with our high-density lithium cells providing up to 80km of travel on a single charge.
-              </p>
-            </div>
-            <!-- Feature 2 -->
-            <div
-              class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group"
-            >
-              <div
-                class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform"
-              >
-                <span class="material-symbols-outlined">bolt</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Fast Charging</h3>
-              <p class="text-sm text-slate-600 dark:text-gray-400">
-                Get back on the road quickly. Our smart chargers reach 80% capacity in just under 2 hours.
-              </p>
-            </div>
-            <!-- Feature 3 -->
-            <div
-              class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group"
-            >
-              <div
-                class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform"
-              >
-                <span class="material-symbols-outlined">verified_user</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">2-Year Warranty</h3>
-              <p class="text-sm text-slate-600 dark:text-gray-400">
-                Ride with peace of mind. Every bike comes with a comprehensive 2-year warranty on frame and motor.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Product Catalog Header -->
-      <section class="pt-16 px-4 max-w-7xl mx-auto w-full" id="catalog">
-        <div class="flex items-end justify-between mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-          <div>
-            <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Featured Models</h2>
-            <p class="mt-2 text-slate-600 dark:text-gray-400">Choose the perfect ride for your lifestyle.</p>
-          </div>
-          <a class="sm:flex items-center gap-1 text-primary font-bold hover:underline" href="catalog.html">
-            View all <span class="material-symbols-outlined text-sm">arrow_forward</span>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+  <!-- Sticky Navigation Bar -->
+  <header
+    class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="flex items-center gap-2">
+            <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto" />
+            <h2 class="text-xl font-black tracking-tighter text-slate-900 dark:text-white">U WINFLY</h2>
           </a>
         </div>
-      </section>
-      <!-- Product Grid -->
-      <section class="pb-16 px-4 max-w-7xl mx-auto w-full">
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Products will be loaded from data.json via JavaScript -->
-        </div>
-      </section>
-      <!-- Lifestyle & Accessories Carousel -->
-      <section class="py-16 bg-gray-50 dark:bg-neutral-900/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-2xl font-bold mb-8">Lifestyle &amp; Accessories</h2>
-
-          <div class="lifestyle-carousel flex gap-6 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory cursor-grab">
-            <!-- Item 1 -->
-            <div
-              class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group"
-            >
-              <div
-                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('./assets/image/features/1.jpg')"
-              ></div>
-
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6"
-              >
-                <p class="text-white font-extrabold text-xl tracking-tight">Essential Accessories</p>
-                <p class="text-gray-300 text-sm">Helmets, lights, and locks.</p>
-              </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div
-              class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group"
-            >
-              <div
-                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('./assets/image/features/2.jpg')"
-              ></div>
-
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6"
-              >
-                <p class="text-white font-extrabold text-xl tracking-tight">Community Rides</p>
-                <p class="text-gray-300 text-sm">Join our weekly meetups.</p>
-              </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div
-              class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group"
-            >
-              <div
-                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="
-                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDK6DwNXxJIA3s4POylWnDtMmUwgDi5QK98QOd2PpLdvaH_g4gKyJJ_CRmpJe5ci6A_WwIowv9ngr1G2A56f7DXaTWx8Ajb9wxWfyIwkslb1JkKpuJD4be_KtaGb2bq5vJLC3U6c94deYsB_dNSIc8b8ypGxo5W7ZBQNvMbZnM6pG_YxFHx-4dCbuv5uq54cmkm3VJcfwgH6sd3ptonLeleo0ye6AmfMrKUi6m-_tKNEeBLw4ZIGDTMaIAuQWI63aroobKi5vVqXCk5');
-                "
-              ></div>
-
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6"
-              >
-                <p class="text-white font-extrabold text-xl tracking-tight">Maintenance Tips</p>
-                <p class="text-gray-300 text-sm">Keep your ride smooth.</p>
-              </div>
-            </div>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">Home</a>
+          <a class="text-sm font-medium hover:text-primary transition-colors" href="catalog.html">Catalog</a>
+          <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+          <div id="auth-nav" class="flex items-center gap-3 ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
+            <!-- Auth links will be dynamically inserted here -->
+          </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <button class="md:hidden p-2 text-slate-600 dark:text-gray-300 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="flex flex-col w-full">
+    <!-- Hero Section -->
+    <section class="relative w-full min-h-[90vh] flex items-center bg-cover bg-center bg-no-repeat"
+      style="background-image: url('assets/image/hero/2.png')">
+      <!-- Simple Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
+      <!-- Content -->
+      <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-2xl">
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight text-white mb-6">
+            Ride the Future. <span class="text-primary">Zero Emissions.</span>
+          </h1>
+          <p class="text-lg text-gray-200 mb-8">
+            Experience the ultimate freedom with U WINFLY. Engineered for power, designed for comfort, and built for a
+            sustainable tomorrow. Up to 80km range on a single charge.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button
+              class="bg-primary hover:bg-primary-dark text-white font-bold h-14 px-8 rounded-xl transition-colors">
+              Explore Models
+            </button>
+            <button class="bg-white/90 hover:bg-white text-slate-900 font-bold h-14 px-8 rounded-xl transition-colors">
+              Watch Video
+            </button>
           </div>
         </div>
-      </section>
-
-      <!-- HERO -->
-      <section id="contact" class="py-20 bg-gradient-to-r from-primary/10 to-transparent">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-          <h1 class="text-4xl sm:text-5xl font-black mb-4">Get in Touch</h1>
+      </div>
+    </section>
+    <!-- Advantages Section -->
+    <section class="py-16 bg-white dark:bg-background-dark/50" id="features">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-3xl font-bold tracking-tight mb-4">Why Choose U WINFLY?</h2>
           <p class="text-slate-600 dark:text-gray-400">
-            Have questions about our e-bikes or need support? Our team is happy to help 🚲⚡
+            We don't just sell bikes; we sell a lifestyle upgrade. Check out what makes our models stand out from the
+            competition.
           </p>
         </div>
-      </section>
-
-      <!-- CONTACT SECTION -->
-      <section class="py-16">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <!-- CONTACT INFO -->
-          <div class="space-y-6">
-            <h2 class="text-2xl font-bold">Contact Information</h2>
-            <p class="text-slate-600 dark:text-gray-400">
-              Reach us through any of the channels below or send us a message directly.
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div
+            class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group">
+            <div
+              class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined">battery_charging_full</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Long Range Battery</h3>
+            <p class="text-sm text-slate-600 dark:text-gray-400">
+              Go further with our high-density lithium cells providing up to 80km of travel on a single charge.
             </p>
-
-            <div class="space-y-4 text-sm">
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-primary">location_on</span>
-                <span>HRV3+8R Pancoran Mas, Kota Depok, Jawa Barat</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-primary">call</span>
-                <span>+62 822-3457-4909</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-primary">mail</span>
-                <span>support@uwinfly.com</span>
-              </div>
-            </div>
-
-            <!-- MAP -->
-            <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mt-6">
-              <iframe
-                class="w-full h-64"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15859.606842960582!2d106.7854593!3d-6.4066621!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ed0bb1ca65dd%3A0xadd7eefda21287b8!2sUwinfly%20Sepeda%20Listrik%20dan%20Motor%20Listrik%20%22Sales%2C%20Service%20dan%20Sparepart%22!5e0!3m2!1sid!2sid!4v1766589126140!5m2!1sid!2sid"
-              >
-              </iframe>
-            </div>
           </div>
-
-          <!-- CONTACT FORM -->
-          <div class="bg-white dark:bg-neutral-900 rounded-2xl p-8 shadow-lg">
-            <h2 class="text-2xl font-bold mb-6">Send Us a Message</h2>
-            <form class="space-y-5">
-              <div>
-                <label class="text-sm font-medium">Name</label>
-                <input
-                  type="text"
-                  required
-                  class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary"
-                />
-              </div>
-              <div>
-                <label class="text-sm font-medium">Email</label>
-                <input
-                  type="email"
-                  required
-                  class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary"
-                />
-              </div>
-              <div>
-                <label class="text-sm font-medium">Message</label>
-                <textarea
-                  rows="5"
-                  required
-                  class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 rounded-xl transition-colors"
-              >
-                Send Message
-              </button>
-            </form>
+          <!-- Feature 2 -->
+          <div
+            class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group">
+            <div
+              class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Fast Charging</h3>
+            <p class="text-sm text-slate-600 dark:text-gray-400">
+              Get back on the road quickly. Our smart chargers reach 80% capacity in just under 2 hours.
+            </p>
+          </div>
+          <!-- Feature 3 -->
+          <div
+            class="p-6 rounded-2xl bg-background-light dark:bg-neutral-900 border border-transparent hover:border-primary/20 transition-all hover:shadow-lg group">
+            <div
+              class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined">verified_user</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">2-Year Warranty</h3>
+            <p class="text-sm text-slate-600 dark:text-gray-400">
+              Ride with peace of mind. Every bike comes with a comprehensive 2-year warranty on frame and motor.
+            </p>
           </div>
         </div>
-      </section>
-    </main>
-    <!-- Footer -->
-    <footer class="bg-background-dark text-white py-16">
+      </div>
+    </section>
+    <!-- Product Catalog Header -->
+    <section class="pt-16 px-4 max-w-7xl mx-auto w-full" id="catalog">
+      <div class="flex items-end justify-between mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Featured Models</h2>
+          <p class="mt-2 text-slate-600 dark:text-gray-400">Choose the perfect ride for your lifestyle.</p>
+        </div>
+        <a class="sm:flex items-center gap-1 text-primary font-bold hover:underline" href="catalog.html">
+          View all <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+    <!-- Product Grid -->
+    <section class="pb-16 px-4 max-w-7xl mx-auto w-full">
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Products will be loaded from data.json via JavaScript -->
+      </div>
+    </section>
+    <!-- Lifestyle & Accessories Carousel -->
+    <section class="py-16 bg-gray-50 dark:bg-neutral-900/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <!-- Brand Column -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-2">
-              <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto" />
-              <h2 class="text-xl font-bold">U WINFLY</h2>
-            </div>
-            <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Revolutionizing urban mobility one ride at a time. Eco-friendly, efficient, and stylish electric bikes for everyone.
-            </p>
-            <div class="flex gap-4 pt-2">
-              <a class="text-gray-400 hover:text-primary transition-colors" href="#"
-                ><span class="material-symbols-outlined">public</span></a
-              >
-              <!-- "Social" icon placeholder since specific brands aren't in material symbols -->
-              <a class="text-gray-400 hover:text-primary transition-colors" href="#"
-                ><span class="material-symbols-outlined">alternate_email</span></a
-              >
-              <a class="text-gray-400 hover:text-primary transition-colors" href="#"
-                ><span class="material-symbols-outlined">share</span></a
-              >
+        <h2 class="text-2xl font-bold mb-8">Lifestyle &amp; Accessories</h2>
+
+        <div class="lifestyle-carousel flex gap-6 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory cursor-grab">
+          <!-- Item 1 -->
+          <div
+            class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+              style="background-image: url('./assets/image/features/1.jpg')"></div>
+
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6">
+              <p class="text-white font-extrabold text-xl tracking-tight">Essential Accessories</p>
+              <p class="text-gray-300 text-sm">Helmets, lights, and locks.</p>
             </div>
           </div>
-          <!-- Navigation Links -->
-          <div class="flex gap-12">
-            <div>
-              <h3 class="font-bold text-lg mb-4">Shop</h3>
-              <ul class="space-y-3 text-sm text-gray-400">
-                <li><a class="hover:text-primary transition-colors" href="catalog.html">All E-Bikes</a></li>
-                <li><a class="hover:text-primary transition-colors" href="#">Accessories</a></li>
-                <li><a class="hover:text-primary transition-colors" href="#">Parts</a></li>
-                <li><a class="hover:text-primary transition-colors" href="#">Sale</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="font-bold text-lg mb-4">Company</h3>
-              <ul class="space-y-3 text-sm text-gray-400">
-                <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
-                <li><a class="hover:text-primary transition-colors" href="index.html#contact">Contact</a></li>
-                <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
-                <li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
-              </ul>
+
+          <!-- Item 2 -->
+          <div
+            class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+              style="background-image: url('./assets/image/features/2.jpg')"></div>
+
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6">
+              <p class="text-white font-extrabold text-xl tracking-tight">Community Rides</p>
+              <p class="text-gray-300 text-sm">Join our weekly meetups.</p>
             </div>
           </div>
-          <!-- Newsletter / Contact Mini -->
-          <div>
-            <h3 class="font-bold text-lg mb-4">Stay Connected</h3>
-            <p class="text-gray-400 text-sm mb-4">Subscribe to our newsletter for the latest updates and exclusive offers.</p>
-            <div class="flex gap-2">
-              <input
-                class="bg-neutral-800 border-none rounded-lg text-sm text-white px-4 py-2 w-full focus:ring-1 focus:ring-primary"
-                placeholder="Your email"
-                type="email"
-              />
-              <button
-                class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold text-sm transition-colors"
-              >
-                Join
-              </button>
-            </div>
-            <div class="mt-8 text-sm text-gray-500">
-              <p>© 2023 U WINFLY. All rights reserved.</p>
+
+          <!-- Item 3 -->
+          <div
+            class="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] aspect-[3/4] snap-center rounded-2xl overflow-hidden relative group">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+              style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDK6DwNXxJIA3s4POylWnDtMmUwgDi5QK98QOd2PpLdvaH_g4gKyJJ_CRmpJe5ci6A_WwIowv9ngr1G2A56f7DXaTWx8Ajb9wxWfyIwkslb1JkKpuJD4be_KtaGb2bq5vJLC3U6c94deYsB_dNSIc8b8ypGxo5W7ZBQNvMbZnM6pG_YxFHx-4dCbuv5uq54cmkm3VJcfwgH6sd3ptonLeleo0ye6AmfMrKUi6m-_tKNEeBLw4ZIGDTMaIAuQWI63aroobKi5vVqXCk5');
+                "></div>
+
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6">
+              <p class="text-white font-extrabold text-xl tracking-tight">Maintenance Tips</p>
+              <p class="text-gray-300 text-sm">Keep your ride smooth.</p>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/auth.js"></script>
-    <script>
-      // Update navigation based on auth status
-      document.addEventListener("DOMContentLoaded", function () {
-        const authNav = document.getElementById("auth-nav");
-        if (authNav) {
-          if (isLoggedIn()) {
-            const user = getCurrentUser();
-            authNav.innerHTML = `
-                        <a href="admin/index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors">
-                            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
-                            <span class="text-sm">Admin</span>
-                        </a>
-                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800">
-                            <span class="material-symbols-outlined text-sm text-gray-600 dark:text-gray-400">person</span>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${user.name}</span>
-                        </div>
-                        <button onclick="handleNavLogout()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">
-                            <span class="material-symbols-outlined text-sm">logout</span>
-                            <span class="text-sm">Logout</span>
-                        </button>
-                    `;
-          } else {
-            authNav.innerHTML = `
+    </section>
+
+    <!-- HERO -->
+    <section id="contact" class="py-20 bg-gradient-to-r from-primary/10 to-transparent">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h1 class="text-4xl sm:text-5xl font-black mb-4">Get in Touch</h1>
+        <p class="text-slate-600 dark:text-gray-400">
+          Have questions about our e-bikes or need support? Our team is happy to help 🚲⚡
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- CONTACT INFO -->
+        <div class="space-y-6">
+          <h2 class="text-2xl font-bold">Contact Information</h2>
+          <p class="text-slate-600 dark:text-gray-400">
+            Reach us through any of the channels below or send us a message directly.
+          </p>
+
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">location_on</span>
+              <span>HRV3+8R Pancoran Mas, Kota Depok, Jawa Barat</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">call</span>
+              <span>+62 822-3457-4909</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">mail</span>
+              <span>support@uwinfly.com</span>
+            </div>
+          </div>
+
+          <!-- MAP -->
+          <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mt-6">
+            <iframe class="w-full h-64" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15859.606842960582!2d106.7854593!3d-6.4066621!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ed0bb1ca65dd%3A0xadd7eefda21287b8!2sUwinfly%20Sepeda%20Listrik%20dan%20Motor%20Listrik%20%22Sales%2C%20Service%20dan%20Sparepart%22!5e0!3m2!1sid!2sid!4v1766589126140!5m2!1sid!2sid">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="bg-white dark:bg-neutral-900 rounded-2xl p-8 shadow-lg">
+          <h2 class="text-2xl font-bold mb-6">Send Us a Message</h2>
+          <form class="space-y-5">
+            <div>
+              <label class="text-sm font-medium">Name</label>
+              <input type="text" required
+                class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary" />
+            </div>
+            <div>
+              <label class="text-sm font-medium">Email</label>
+              <input type="email" required
+                class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary" />
+            </div>
+            <div>
+              <label class="text-sm font-medium">Message</label>
+              <textarea rows="5" required
+                class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-neutral-800 focus:ring-primary focus:border-primary"></textarea>
+            </div>
+            <button type="submit"
+              class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 rounded-xl transition-colors">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-background-dark text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Brand Column -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto" />
+            <h2 class="text-xl font-bold">U WINFLY</h2>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+            Revolutionizing urban mobility one ride at a time. Eco-friendly, efficient, and stylish electric bikes for
+            everyone.
+          </p>
+          <div class="flex gap-4 pt-2">
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">public</span></a>
+            <!-- "Social" icon placeholder since specific brands aren't in material symbols -->
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">alternate_email</span></a>
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">share</span></a>
+          </div>
+        </div>
+        <!-- Navigation Links -->
+        <div class="flex gap-12">
+          <div>
+            <h3 class="font-bold text-lg mb-4">Shop</h3>
+            <ul class="space-y-3 text-sm text-gray-400">
+              <li><a class="hover:text-primary transition-colors" href="catalog.html">All E-Bikes</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Accessories</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Parts</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Sale</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-4">Company</h3>
+            <ul class="space-y-3 text-sm text-gray-400">
+              <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+              <li><a class="hover:text-primary transition-colors" href="index.html#contact">Contact</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Newsletter / Contact Mini -->
+        <div>
+          <h3 class="font-bold text-lg mb-4">Stay Connected</h3>
+          <p class="text-gray-400 text-sm mb-4">Subscribe to our newsletter for the latest updates and exclusive offers.
+          </p>
+          <div class="flex gap-2">
+            <input
+              class="bg-neutral-800 border-none rounded-lg text-sm text-white px-4 py-2 w-full focus:ring-1 focus:ring-primary"
+              placeholder="Your email" type="email" />
+            <button
+              class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold text-sm transition-colors">
+              Join
+            </button>
+          </div>
+          <div class="mt-8 text-sm text-gray-500">
+            <p>© 2023 U WINFLY. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // Update navigation based on auth status
+    document.addEventListener("DOMContentLoaded", function () {
+      const authNav = document.getElementById("auth-nav");
+      if (authNav) {
+        if (isLoggedIn()) {
+          const user = getCurrentUser();
+          let adminLink = '';
+          if (typeof isAdmin === 'function' && isAdmin()) {
+          adminLink = `
+                <a href="admin/index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors">
+                  <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+                  <span class="text-sm">Admin</span>
+                </a>`;
+          }
+          authNav.innerHTML = `${adminLink}
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800">
+                  <span class="material-symbols-outlined text-sm text-gray-600 dark:text-gray-400">person</span>
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${user.name}</span>
+                </div>
+                <button onclick="handleNavLogout()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">
+                  <span class="material-symbols-outlined text-sm">logout</span>
+                  <span class="text-sm">Logout</span>
+                </button>`;
+        } else {
+          authNav.innerHTML = `
                         <a href="login.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
                             Login
                         </a>
@@ -462,16 +399,17 @@
                             Register
                         </a>
                     `;
-          }
-        }
-      });
-
-      function handleNavLogout() {
-        if (confirm("Apakah Anda yakin ingin logout?")) {
-          logout();
-          window.location.reload();
         }
       }
-    </script>
-  </body>
+    });
+
+    function handleNavLogout() {
+      if (confirm("Apakah Anda yakin ingin logout?")) {
+        logout();
+        window.location.reload();
+      }
+    }
+  </script>
+</body>
+
 </html>

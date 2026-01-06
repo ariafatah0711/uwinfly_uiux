@@ -73,10 +73,10 @@
         </div>
         <form class="space-y-5" id="loginForm">
             <div>
-                <label class="block text-sm font-semibold mb-2 text-slate-700 dark:text-gray-300" for="email">Email</label>
+                <label class="block text-sm font-semibold mb-2 text-slate-700 dark:text-gray-300" for="email">Email or Username</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl">email</span>
-                    <input class="w-full pl-11 pr-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" type="email" id="email" placeholder="your@email.com" required />
+                    <input class="w-full pl-11 pr-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" type="text" id="email" placeholder="email or username" required />
                 </div>
             </div>
             <div>
@@ -101,6 +101,10 @@
             <span class="text-gray-500 dark:text-gray-400">Don't have an account?</span>
             <a href="./register.html" class="text-primary font-bold hover:underline ml-1">Register now</a>
         </div>
+        <div class="mt-3 text-center text-xs text-gray-500">
+            <button type="button" id="toggleAdminCreds" class="text-primary font-medium underline">Show admin credentials (for assignment)</button>
+            <div id="adminCreds" class="hidden mt-2 text-sm text-gray-700 dark:text-gray-300">admin : admin <button id="copyAdminCreds" type="button" class="ml-2 text-xs bg-primary text-white px-2 py-1 rounded">Use</button></div>
+        </div>
         </div>
     </div>
     <script src="assets/js/auth.js"></script>
@@ -115,17 +119,48 @@
 
             if (result.success) {
                 alert(result.message);
-                // Redirect to admin dashboard or home
-                const redirectTo = new URLSearchParams(window.location.search).get('redirect') || 'admin/index.html';
-                window.location.href = redirectTo;
+                // Redirect based on role: admin -> admin dashboard, user -> home
+                const user = result.user || getCurrentUser();
+                if (user && user.role === 'admin') {
+                    window.location.href = new URLSearchParams(window.location.search).get('redirect') || 'admin/index.html';
+                } else {
+                    window.location.href = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                }
             } else {
                 alert(result.message);
             }
         });
 
-        // Check if already logged in
+        // Check if already logged in and redirect based on role
         if (isLoggedIn()) {
-            window.location.href = 'admin/index.html';
+            const u = getCurrentUser();
+            if (u && u.role === 'admin') {
+                window.location.href = 'admin/index.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Admin credentials toggle & copy (for assignment)
+        const toggleBtn = document.getElementById('toggleAdminCreds');
+        const adminCreds = document.getElementById('adminCreds');
+        const copyBtn = document.getElementById('copyAdminCreds');
+        if (toggleBtn && adminCreds) {
+            toggleBtn.addEventListener('click', function () {
+                adminCreds.classList.toggle('hidden');
+                this.textContent = adminCreds.classList.contains('hidden') ? 'Show admin credentials (for assignment)' : 'Hide admin credentials';
+            });
+        }
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function () {
+                const emailInput = document.getElementById('email');
+                const pwInput = document.getElementById('password');
+                if (emailInput && pwInput) {
+                    emailInput.value = 'admin';
+                    pwInput.value = 'admin';
+                    pwInput.focus();
+                }
+            });
         }
     </script>
 </body>
