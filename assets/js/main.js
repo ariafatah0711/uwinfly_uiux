@@ -1,8 +1,11 @@
 // main.js for U WINFLY Frontend Interactivity
-
 document.addEventListener("DOMContentLoaded", function () {
   // --- Load Products from JSON ---
   loadProducts();
+
+  // Add floating cart button and update count
+  createCartButton();
+  updateCartCount();
 
   // --- Carousel Interactivity (Manual Scroll) ---
   const carousel = document.querySelector(".flex.overflow-x-auto");
@@ -39,6 +42,8 @@ async function loadProducts() {
     const response = await fetch("data.json");
     const data = await response.json();
     const productGrid = document.getElementById("product-grid");
+    // expose products globally for cart page or other scripts
+    window.__uwinfly_products = data.products || [];
 
     if (productGrid && data.products) {
       // Clear existing products
@@ -53,6 +58,9 @@ async function loadProducts() {
         const productCard = createProductCard(product);
         productGrid.appendChild(productCard);
       });
+
+      // update cart buttons/count after rendering
+      updateCartCount();
     }
   } catch (error) {
     console.error("Error loading products:", error);
@@ -104,7 +112,7 @@ function createProductCard(product) {
             product.stock === "out_of_stock" ? "opacity-50 cursor-not-allowed" : ""
           }"
           ${product.stock === "out_of_stock" ? "disabled" : ""}
-          onclick="window.open('${product.link}', '_blank')">
+          onclick="addToCart(${product.id})">
           ${product.stock === "out_of_stock" ? "Habis" : "Add to Cart"}
         </button>
       </div>
@@ -121,4 +129,106 @@ function formatRupiah(angka) {
     currency: "IDR",
     minimumFractionDigits: 0,
   }).format(angka);
+}
+
+// --- Cart Utilities ---
+const CART_KEY = "uwinfly_cart";
+
+function getCart() {
+  const user = getCurrentUser();
+  if (!user) return [];
+  return user.cart || [];
+}
+
+function saveCart(cart) {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  // Update user's cart in uwinfly_users
+  const users = JSON.parse(localStorage.getItem("uwinfly_users") || "[]");
+  const userIndex = users.findIndex((u) => u.id === user.id);
+  if (userIndex !== -1) {
+    users[userIndex].cart = cart;
+    localStorage.setItem("uwinfly_users", JSON.stringify(users));
+    // Update current user in session
+    user.cart = cart;
+    localStorage.setItem("uwinfly_current_user", JSON.stringify(user));
+  }
+  updateCartCount();
+}
+
+function addToCart(productId) {
+  // Check if user is logged in
+  if (!isLoggedIn()) {
+    alert("Silakan login terlebih dahulu untuk menambahkan ke keranjang!");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Ensure products loaded
+  const products = window.__uwinfly_products || [];
+  const product = products.find((p) => p.id === productId);
+  if (!product) {
+    alert("Produk tidak ditemukan.");
+    return;
+  }
+
+  if (product.stock === "out_of_stock") {
+    alert("Produk sedang habis.");
+    return;
+  }
+
+  const cart = getCart();
+  const existing = cart.find((c) => c.id === productId);
+  if (existing) {
+    existing.quantity = (existing.quantity || 1) + 1;
+  } else {
+    cart.push({ id: productId, quantity: 1 });
+  }
+  saveCart(cart);
+
+  // small feedback
+  showToast("Berhasil ditambahkan ke keranjang");
+}
+
+function removeFromCart(productId) {
+  let cart = getCart();
+  cart = cart.filter((c) => c.id !== productId);
+  saveCart(cart);
+}
+
+function changeQuantity(productId, qty) {
+  const cart = getCart();
+  const item = cart.find((c) => c.id === productId);
+  if (!item) return;
+  item.quantity = Math.max(1, qty);
+  saveCart(cart);
+}
+
+function updateCartCount() {
+  const cart = getCart();
+  const count = cart.reduce((s, it) => s + (it.quantity || 0), 0);
+  const badge = document.getElementById("uw-cart-count");
+  if (badge) badge.textContent = String(count);
+}
+
+function createCartButton() {
+  // only create one
+  if (document.getElementById("uw-cart-button")) return;
+  const btn = document.createElement("a");
+  btn.id = "uw-cart-button";
+  btn.href = "cart.html";
+  btn.className =
+    "fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full p-3 shadow-lg flex items-center gap-2 hover:scale-105 transition-transform";
+  btn.title = "Lihat Keranjang";
+  btn.innerHTML = `<span class="material-symbols-outlined">shopping_cart</span><span id="uw-cart-count" class="ml-1 font-bold">0</span>`;
+  document.body.appendChild(btn);
+}
+
+function showToast(message, timeout = 1800) {
+  const t = document.createElement("div");
+  t.className = "fixed right-6 bottom-20 z-60 bg-black/80 text-white px-4 py-2 rounded-lg";
+  t.textContent = message;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), timeout);
 }

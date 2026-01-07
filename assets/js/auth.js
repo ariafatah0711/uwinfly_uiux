@@ -53,6 +53,7 @@ function register(name, email, password) {
     email: email,
     password: encodePassword(password),
     role: "user",
+    cart: [],
     createdAt: new Date().toISOString(),
   };
 
@@ -81,6 +82,7 @@ function login(email, password) {
         email: email,
         password: encodePassword(password),
         role: "admin",
+        cart: [],
         createdAt: new Date().toISOString(),
       };
       users.push(adminUser);
@@ -90,6 +92,7 @@ function login(email, password) {
       adminUser.email = email;
       adminUser.password = encodePassword(password);
       adminUser.role = "admin";
+      if (!adminUser.cart) adminUser.cart = [];
     }
     saveUsers(users);
 
