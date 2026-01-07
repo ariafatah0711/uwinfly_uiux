@@ -121,11 +121,12 @@
                   <div class="card-header">
                     <h3 class="card-title">All Users</h3>
                   </div>
-                  <div class="card-body">
-                    <div id="users-list" class="table-responsive">
-                      <!-- Users will be loaded here -->
-                    </div>
-                  </div>
+                    <div class="card-body">
+                        <div id="users-message"></div>
+                        <div id="users-list" class="table-responsive">
+                          <!-- Users will be loaded here -->
+                        </div>
+                      </div>
                 </div>
               </div>
             </div>
@@ -172,70 +173,56 @@
     </script>
     <script src="../assets/js/auth.js"></script>
     <script src="./assets/js/admin.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        if (!requireAuth()) return;
+    <script src="./assets/js/users.js"></script>
 
-        const user = getCurrentUser();
-        if (user) {
-          document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
-        }
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nama</label>
+              <input id="edit-name" class="form-control" type="text" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input id="edit-email" class="form-control" type="email" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password (kosongkan jika tidak ingin mengubah)</label>
+              <input id="edit-password" class="form-control" type="password" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button id="edit-save" type="button" class="btn btn-primary">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // Load users
-        const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
-        const container = document.getElementById('users-list');
-
-        if (users.length === 0) {
-          container.innerHTML = '<p class="text-muted">No users found.</p>';
-          return;
-        }
-
-        let tableHTML = `
-          <table class="table table-bordered table-striped table-hover">
-            <thead>
-              <tr>
-                <th style="width: 50px;">#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Registered</th>
-                <th style="width: 120px;">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        users.forEach((userData, index) => {
-          const createdAt = new Date(userData.createdAt).toLocaleDateString('id-ID', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-
-          tableHTML += `
-            <tr>
-              <td>${index + 1}</td>
-              <td><strong>${userData.name}</strong></td>
-              <td>${userData.email}</td>
-              <td>${createdAt}</td>
-              <td>
-                <button class="btn btn-sm btn-primary" title="Edit">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-sm btn-danger" title="Delete">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
-            </tr>
-          `;
-        });
-
-        tableHTML += `
-            </tbody>
-          </table>
-        `;
-
-        container.innerHTML = tableHTML;
-      });
-    </script>
+    <!-- Delete Confirm Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Hapus user ini? Tindakan ini tidak dapat dibatalkan.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button id="confirm-delete-yes" type="button" class="btn btn-danger">Hapus</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- users.js loads the users-management logic -->
   </body>
 </html>
