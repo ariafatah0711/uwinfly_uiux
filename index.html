@@ -23,6 +23,11 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="assets/js/tailwind-config.js"></script>
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preload" href="assets/image/hero/2.png" as="image">
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/navbar.js"></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
@@ -56,7 +61,7 @@
   </header>
   <main class="flex flex-col w-full">
     <!-- Hero Section -->
-    <section class="relative w-full min-h-[90vh] flex items-center bg-cover bg-center bg-no-repeat"
+    <section class="hero-section relative w-full min-h-[90vh] flex items-center bg-cover bg-center bg-no-repeat"
       style="background-image: url('assets/image/hero/2.png')">
       <!-- Simple Overlay -->
       <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
@@ -337,53 +342,6 @@
       </div>
     </div>
   </footer>
-  <!-- Main JS -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/auth.js"></script>
-  <script>
-    // Update navigation based on auth status
-    document.addEventListener("DOMContentLoaded", function () {
-      const authNav = document.getElementById("auth-nav");
-      if (authNav) {
-        if (isLoggedIn()) {
-          const user = getCurrentUser();
-          let adminLink = '';
-          if (typeof isAdmin === 'function' && isAdmin()) {
-          adminLink = `
-                <a href="admin/index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors">
-                  <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
-                  <span class="text-sm">Admin</span>
-                </a>`;
-          }
-          authNav.innerHTML = `${adminLink}
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800">
-                  <span class="material-symbols-outlined text-sm text-gray-600 dark:text-gray-400">person</span>
-                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${user.name}</span>
-                </div>
-                <button onclick="handleNavLogout()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">
-                  <span class="material-symbols-outlined text-sm">logout</span>
-                  <span class="text-sm">Logout</span>
-                </button>`;
-        } else {
-          authNav.innerHTML = `
-                        <a href="login.html" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
-                            Login
-                        </a>
-                        <a href="register.html" class="px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-medium transition-colors shadow-md shadow-primary/20">
-                            Register
-                        </a>
-                    `;
-        }
-      }
-    });
-
-    function handleNavLogout() {
-      if (confirm("Apakah Anda yakin ingin logout?")) {
-        logout();
-        window.location.reload();
-      }
-    }
-  </script>
 </body>
 
 </html>

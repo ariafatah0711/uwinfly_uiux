@@ -362,6 +362,44 @@
     <!-- Auth & Admin Scripts -->
     <script src="../assets/js/auth.js"></script>
     <script src="./assets/js/admin.js"></script>
+    <script>
+      (async function () {
+        // Load products for admin pages and save to localStorage for consistent pricing lookups
+        try {
+          const resp = await fetch('../data.json');
+          const d = await resp.json();
+          if (d && Array.isArray(d.products)) {
+            localStorage.setItem('uwinfly_products', JSON.stringify(d.products));
+          }
+        } catch (e) {
+          console.warn('Could not fetch products for admin stats', e);
+        }
+
+        // Compute dashboard stats
+        const products = JSON.parse(localStorage.getItem('uwinfly_products') || '[]');
+        const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
+        const orders = JSON.parse(localStorage.getItem('uwinfly_orders') || '[]');
+
+        // Include carts as pseudo-orders for counting purposes
+        const cartOrdersCount = (users.filter((u) => u.cart && Array.isArray(u.cart) && u.cart.length > 0) || []).length;
+
+        const totalProducts = products.length;
+        const totalUsers = users.length;
+        const totalOrders = orders.length + cartOrdersCount;
+        const revenue = (orders || []).filter((o) => o.status === 'sudah bayar').reduce((s, o) => s + (o.total || 0), 0);
+
+        const fmt = (v) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v);
+
+        const sp = document.getElementById('stat-products');
+        const so = document.getElementById('stat-orders');
+        const su = document.getElementById('stat-users');
+        const sr = document.getElementById('stat-revenue');
+        if (sp) sp.textContent = String(totalProducts);
+        if (so) so.textContent = String(totalOrders);
+        if (su) su.textContent = String(totalUsers);
+        if (sr) sr.textContent = fmt(revenue);
+      })();
+    </script>
   </body>
   <!--end::Body-->
 </html>

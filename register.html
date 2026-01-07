@@ -17,19 +17,36 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
+    <!-- MAIN SCRIPT -->
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/auth-pages.js"></script>
+    <script src="assets/js/navbar.js"></script>
 </head>
 <body class="bg-gradient-to-br from-background-light via-accent to-background-light dark:from-background-dark dark:via-neutral-900 dark:to-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col relative overflow-hidden">
-    <!-- Simple Navbar -->
+    <!-- Navbar -->
     <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="index.html" class="flex items-center gap-2">
-                    <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto">
-                    <h2 class="text-xl font-black tracking-tighter text-slate-900 dark:text-white">U WINFLY</h2>
-                </a>
-                <a href="index.html" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-                    Back to Home
-                </a>
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="assets/image/logo.jpg" alt="U WINFLY Logo" class="h-8 w-auto" />
+                        <h2 class="text-xl font-black tracking-tighter text-slate-900 dark:text-white">U WINFLY</h2>
+                    </a>
+                </div>
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">Home</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="catalog.html">Catalog</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+                    <div id="auth-nav" class="flex items-center gap-3 ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
+                        <!-- Auth links will be dynamically inserted here -->
+                    </div>
+                </nav>
+                <!-- Mobile Menu -->
+                <button class="md:hidden p-2 text-slate-600 dark:text-gray-300 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
             </div>
         </div>
     </header>
@@ -85,49 +102,5 @@
         </div>
         </div>
     </div>
-    <script src="assets/js/auth.js"></script>
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Validate password length
-            if (password.length < 8) {
-                alert('Password harus minimal 8 karakter!');
-                return;
-            }
-
-            const result = register(name, email, password);
-
-            if (result.success) {
-                alert(result.message);
-                // Auto login after registration
-                const loginResult = login(email, password);
-                if (loginResult.success) {
-                    const user = loginResult.user || getCurrentUser();
-                    if (user && user.role === 'admin') {
-                        window.location.href = 'admin/index.html';
-                    } else {
-                        window.location.href = 'index.html';
-                    }
-                }
-            } else {
-                alert(result.message);
-            }
-        });
-
-        // Check if already logged in and redirect based on role
-        if (isLoggedIn()) {
-            const u = getCurrentUser();
-            if (u && u.role === 'admin') {
-                window.location.href = 'admin/index.html';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }
-    </script>
 </body>
 </html>

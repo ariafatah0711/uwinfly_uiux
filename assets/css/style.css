@@ -30,3 +30,16 @@ section[id] {
 body {
     font-family: "Inter", sans-serif;
 }
+
+/* Prevent layout shift: reserve space for product grid and provide hero fallback */
+#product-grid {
+    min-height: 360px;
+    /* reserve vertical space until JS injects products */
+}
+
+.hero-section {
+    background-color: #0b1220;
+    /* subtle dark-blue fallback to reduce flash */
+    background-size: cover;
+    background-position: center;
+}

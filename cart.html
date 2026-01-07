@@ -10,6 +10,11 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="assets/js/tailwind-config.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- MAIN SCRIPT -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cart.js"></script>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
   <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
@@ -28,7 +33,13 @@
     <h1 class="text-3xl font-bold mb-6">Keranjang Belanja</h1>
 
     <div id="cart-root" class="grid grid-cols-1 gap-6">
-      <p id="empty-msg" class="text-gray-600">Memuat keranjang...</p>
+      <div id="empty-state" class="flex flex-col items-center justify-center py-16 bg-white dark:bg-neutral-900 rounded-2xl border-2 border-dashed border-gray-300 dark:border-neutral-700">
+        <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">shopping_cart</span>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">Keranjang Anda Kosong</h2>
+        <p class="text-gray-600 dark:text-gray-400 text-center mb-6 max-w-sm">Belum ada produk di keranjang. Mulai belanja sekarang dan temukan produk pilihan Anda!</p>
+        <a href="catalog.html" class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-dark text-white font-bold transition-colors">Belanja Sekarang</a>
+      </div>
+      <p id="empty-msg" class="text-gray-600 hidden">Memuat keranjang...</p>
     </div>
 
     <div id="cart-summary" class="mt-8 hidden">
@@ -67,254 +78,5 @@
         <button id="confirm-payment" class="flex-1 px-4 py-2 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600">Sudah Bayar</button>
       </div>
     </div>
-
-  <script src="assets/js/auth.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script>
-    function getCartLocal() {
-      const user = getCurrentUser();
-      if (!user) return [];
-      return user.cart || [];
-    }
-
-    async function fetchProducts() {
-      try {
-        const res = await fetch('data.json');
-        const d = await res.json();
-        return d.products || [];
-      } catch (e) {
-        console.error(e);
-        return [];
-      }
-    }
-
-    function formatRupiah(angka) {
-      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-    }
-
-    function renderCart(products, cart) {
-      const root = document.getElementById('cart-root');
-      const summary = document.getElementById('cart-summary');
-      const empty = document.getElementById('empty-msg');
-
-      if (!root) return;
-
-      root.innerHTML = '';
-      if (!cart || cart.length === 0) {
-        if (empty) empty.textContent = 'Keranjang Anda kosong.';
-        if (summary) summary.classList.add('hidden');
-        return;
-      }
-      if (empty) empty.textContent = '';
-      let total = 0;
-      cart.forEach(item => {
-        const p = products.find(pp => pp.id === item.id);
-        if (!p) return;
-        const row = document.createElement('div');
-        row.className = 'bg-white dark:bg-neutral-900 p-4 rounded-2xl border border-gray-100 dark:border-neutral-800 flex items-center gap-4';
-
-        const img = document.createElement('div');
-        img.className = 'w-32 h-20 bg-center bg-cover rounded-lg';
-        img.style.backgroundImage = `url(${p.image})`;
-
-        const info = document.createElement('div');
-        info.className = 'flex-1';
-        info.innerHTML = `<div class="flex justify-between items-start"><div><h3 class="font-bold">${p.name}</h3><p class="text-sm text-gray-500">${p.category}</p></div><div class="text-lg font-bold">${formatRupiah(p.price)}</div></div><p class="text-sm text-gray-500 mt-2">${p.description}</p>`;
-
-        const controls = document.createElement('div');
-        controls.className = 'flex flex-col items-end gap-2';
-
-        const qtyWrap = document.createElement('div');
-        qtyWrap.className = 'flex items-center gap-2';
-        const dec = document.createElement('button');
-        dec.className = 'px-2 py-1 border rounded';
-        dec.textContent = '-';
-        dec.onclick = () => {
-          const freshCart = getCartLocal();
-          const freshItem = freshCart.find(c => c.id === item.id);
-          if (freshItem) {
-            freshItem.quantity = Math.max(1, freshItem.quantity - 1);
-            saveCartLocal(freshCart);
-            refresh();
-          }
-        };
-        const qty = document.createElement('span');
-        qty.textContent = String(item.quantity);
-        const inc = document.createElement('button');
-        inc.className = 'px-2 py-1 border rounded';
-        inc.textContent = '+';
-        inc.onclick = () => {
-          const freshCart = getCartLocal();
-          const freshItem = freshCart.find(c => c.id === item.id);
-          if (freshItem) {
-            freshItem.quantity = (freshItem.quantity || 1) + 1;
-            saveCartLocal(freshCart);
-            refresh();
-          }
-        };
-        qtyWrap.appendChild(dec);
-        qtyWrap.appendChild(qty);
-        qtyWrap.appendChild(inc);
-
-        const remove = document.createElement('button');
-        remove.className = 'text-sm text-red-500';
-        remove.textContent = 'Hapus';
-        remove.onclick = () => {
-          const newCart = getCartLocal().filter(c => c.id !== item.id);
-          saveCartLocal(newCart);
-          refresh();
-        };
-
-        controls.appendChild(qtyWrap);
-        controls.appendChild(remove);
-
-        row.appendChild(img);
-        row.appendChild(info);
-        row.appendChild(controls);
-
-        root.appendChild(row);
-
-        total += p.price * (item.quantity || 1);
-      });
-
-      const totalEl = document.getElementById('cart-total');
-      if (totalEl) totalEl.textContent = formatRupiah(total);
-      if (summary) summary.classList.remove('hidden');
-    }
-
-    function saveCartLocal(cartParam) {
-      const user = getCurrentUser();
-      if (!user) {
-        alert('Silakan login terlebih dahulu!');
-        window.location.href = 'login.html';
-        return;
-      }
-
-      const c = cartParam || getCartLocal();
-
-      // Update user's cart in uwinfly_users
-      const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
-      const userIndex = users.findIndex(u => u.id === user.id);
-      if (userIndex !== -1) {
-        users[userIndex].cart = c;
-        localStorage.setItem('uwinfly_users', JSON.stringify(users));
-        // Update current user in session
-        user.cart = c;
-        localStorage.setItem('uwinfly_current_user', JSON.stringify(user));
-      }
-    }
-
-    async function refresh() {
-      const products = await fetchProducts();
-      const cart = getCartLocal();
-      renderCart(products, cart);
-      // update floating count if present
-      if (window.updateCartCount) window.updateCartCount();
-    }
-
-    // Check if logged in, redirect if not
-    if (!isLoggedIn()) {
-      alert('Silakan login terlebih dahulu untuk melihat keranjang!');
-      window.location.href = 'login.html';
-    }
-
-    // Checkout Modal Handler
-    function generateFakeQRIS(amount) {
-      // Fake QRIS string (00020126 is standard QR header)
-      const timestamp = Date.now().toString().slice(-6);
-      return `00020126360014br.gov.bcb.brcode0136123456789${timestamp}5204481153039651065407${String(amount).padStart(10, '0')}6304${Math.random().toString(16).slice(2, 6).toUpperCase()}`;
-    }
-
-    let currentCheckoutTotal = 0;
-
-    const checkoutBtn = document.getElementById('checkout-btn');
-    const checkoutModal = document.getElementById('checkout-modal');
-    const closeCheckoutBtn = document.getElementById('close-checkout');
-    const confirmPaymentBtn = document.getElementById('confirm-payment');
-
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', function () {
-        const cart = getCartLocal();
-        if (!cart || cart.length === 0) {
-          alert('Keranjang Anda kosong!');
-          return;
-        }
-
-        // Calculate total
-        const products = window.__uwinfly_products || [];
-        let total = 0;
-        cart.forEach(item => {
-          const p = products.find(pp => pp.id === item.id);
-          if (p) total += p.price * (item.quantity || 1);
-        });
-
-        currentCheckoutTotal = total;
-
-        // Show modal
-        checkoutModal.classList.remove('hidden');
-
-        // Generate QR Code
-        document.getElementById('qr-code-container').innerHTML = '';
-        const qrisData = generateFakeQRIS(total);
-        new QRCode(document.getElementById('qr-code-container'), {
-          text: qrisData,
-          width: 200,
-          height: 200,
-          colorDark: '#000000',
-          colorLight: '#ffffff',
-          correctLevel: QRCode.CorrectLevel.H
-        });
-
-        // Update display
-        document.getElementById('checkout-total').textContent = formatRupiah(total);
-        document.getElementById('ref-number').textContent = Math.random().toString(36).substring(2, 11).toUpperCase();
-      });
-    }
-
-    if (closeCheckoutBtn) {
-      closeCheckoutBtn.addEventListener('click', function () {
-        checkoutModal.classList.add('hidden');
-      });
-    }
-
-    if (confirmPaymentBtn) {
-      confirmPaymentBtn.addEventListener('click', function () {
-        alert('Pembayaran berhasil! Terima kasih telah berbelanja. Keranjang Anda telah dikosongkan.');
-
-        // Clear cart
-        const user = getCurrentUser();
-        if (user) {
-          user.cart = [];
-          const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
-          const userIndex = users.findIndex(u => u.id === user.id);
-          if (userIndex !== -1) {
-            users[userIndex].cart = [];
-            localStorage.setItem('uwinfly_users', JSON.stringify(users));
-            localStorage.setItem('uwinfly_current_user', JSON.stringify(user));
-          }
-        }
-
-        checkoutModal.classList.add('hidden');
-        window.location.href = 'index.html';
-      });
-    }
-
-    // Close modal when clicking outside
-    checkoutModal.addEventListener('click', function (e) {
-      if (e.target === this) {
-        this.classList.add('hidden');
-      }
-    });
-
-    const checkoutBtnOld = document.getElementById('checkout-btn');
-    if (checkoutBtnOld) {
-      checkoutBtnOld.removeEventListener('click', function () {
-        alert('Fitur checkout belum diimplementasikan. Anda dapat melanjutkan pembelian nanti.');
-      });
-    }
-
-    // initial render
-    refresh();
-  </script>
 </body>
 </html>

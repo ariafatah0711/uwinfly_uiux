@@ -112,9 +112,11 @@
                   <h3 class="card-title">All Orders</h3>
                 </div>
                 <div class="card-body">
-                  <div class="text-center py-5">
-                    <i class="bi bi-cart-x" style="font-size: 4rem; color: #6c757d;"></i>
-                    <p class="text-muted mt-3">No orders yet. Orders will appear here when customers make purchases.</p>
+                  <div id="orders-root">
+                    <div class="text-center py-5" id="no-orders">
+                      <i class="bi bi-cart-x" style="font-size: 4rem; color: #6c757d;"></i>
+                      <p class="text-muted mt-3">No orders yet. Orders will appear here when customers make purchases.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -164,6 +166,121 @@
       if (user) {
         document.getElementById('user-name').textContent = `Welcome, ${user.name}`;
       }
+    });
+  </script>
+  <script>
+    // Render orders for admin
+    document.addEventListener('DOMContentLoaded', async function () {
+      const root = document.getElementById('orders-root');
+      const noOrders = document.getElementById('no-orders');
+      const orders = JSON.parse(localStorage.getItem('uwinfly_orders') || '[]');
+      const users = JSON.parse(localStorage.getItem('uwinfly_users') || '[]');
+
+      function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+      }
+
+      // Ensure product list is available to compute cart totals
+      let storedProducts = JSON.parse(localStorage.getItem('uwinfly_products') || 'null');
+      if (!storedProducts) {
+        try {
+          const resp = await fetch('../data.json');
+          const d = await resp.json();
+          storedProducts = d && Array.isArray(d.products) ? d.products : [];
+          localStorage.setItem('uwinfly_products', JSON.stringify(storedProducts));
+        } catch (e) {
+          storedProducts = [];
+        }
+      }
+
+      // Include users' current carts as pseudo-orders (status: in_cart) so admin can see not-yet-checked-out carts
+      const cartOrders = users
+        .filter((u) => u.cart && Array.isArray(u.cart) && u.cart.length > 0)
+        .map((u) => {
+          const total = (u.cart || []).reduce((s, it) => {
+            let price = 0;
+            if (storedProducts && Array.isArray(storedProducts)) {
+              const p = storedProducts.find((pp) => pp.id === it.id);
+              price = p ? p.price : 0;
+            }
+            return s + price * (it.quantity || 1);
+          }, 0);
+          return {
+            id: `cart-${u.id}`,
+            refNumber: null,
+            userId: u.id,
+            items: u.cart,
+            total: total,
+            status: 'in_cart',
+            createdAt: null,
+            _isCart: true,
+          };
+        });
+
+      const combined = orders.concat(cartOrders);
+
+      if (!combined || combined.length === 0) {
+        if (root && noOrders) {
+          root.innerHTML = '';
+          root.appendChild(noOrders);
+        }
+        return;
+      }
+
+      // Build table
+      const table = document.createElement('table');
+      table.className = 'table table-striped table-hover';
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+      `;
+      const tbody = document.createElement('tbody');
+
+      // Show newest first: reverse combined array (orders are already chronological)
+      combined.slice().reverse().forEach((o) => {
+        const user = users.find((u) => u.id === o.userId) || {};
+        const itemsCount = (o.items || []).reduce((s, it) => s + (it.quantity || 1), 0);
+        const tr = document.createElement('tr');
+        let statusLabel = '';
+        if (o.status === 'sudah bayar') statusLabel = '<span class="badge bg-success">Sudah Bayar</span>';
+        else if (o.status === 'pending') statusLabel = '<span class="badge bg-warning">Pending</span>';
+        else if (o.status === 'in_cart') statusLabel = '<span class="badge bg-secondary">In Cart</span>';
+        else statusLabel = `<span class="badge bg-info">${String(o.status)}</span>`;
+
+        const createdText = o.createdAt ? new Date(o.createdAt).toLocaleString() : '—';
+
+        tr.innerHTML = `
+          <td>${o.refNumber || o.id}</td>
+          <td>${user.name || 'Guest'}</td>
+          <td>${itemsCount}</td>
+          <td>${formatRupiah(o.total || 0)}</td>
+          <td>${statusLabel}</td>
+          <td>${createdText}</td>
+          <td><button class="btn btn-sm btn-primary view-order">Detail</button></td>
+        `;
+
+        // Attach detail handler
+        tr.querySelector('.view-order').addEventListener('click', function () {
+          const list = (o.items || []).map((it) => `ID:${it.id} x ${it.quantity || 1}`).join('\n');
+          const statusText = o.status === 'in_cart' ? 'In Cart (not checked out)' : o.status;
+          alert(`Ref: ${o.refNumber || o.id}\nCustomer: ${user.name || 'Guest'}\nStatus: ${statusText}\n\nItems:\n${list}`);
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      if (root) root.innerHTML = '';
+      if (root) root.appendChild(table);
     });
   </script>
 </body>

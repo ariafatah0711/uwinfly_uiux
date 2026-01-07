@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- Load Products from JSON ---
   loadProducts();
 
-  // Add floating cart button and update count
-  createCartButton();
+  // Update cart count
   updateCartCount();
 
   // --- Carousel Interactivity (Manual Scroll) ---
@@ -155,6 +154,11 @@ function saveCart(cart) {
     localStorage.setItem("uwinfly_current_user", JSON.stringify(user));
   }
   updateCartCount();
+
+  // Trigger navbar update to refresh cart count
+  if (window.renderNavbar) {
+    window.renderNavbar();
+  }
 }
 
 function addToCart(productId) {
@@ -212,22 +216,9 @@ function updateCartCount() {
   if (badge) badge.textContent = String(count);
 }
 
-function createCartButton() {
-  // only create one
-  if (document.getElementById("uw-cart-button")) return;
-  const btn = document.createElement("a");
-  btn.id = "uw-cart-button";
-  btn.href = "cart.html";
-  btn.className =
-    "fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full p-3 shadow-lg flex items-center gap-2 hover:scale-105 transition-transform";
-  btn.title = "Lihat Keranjang";
-  btn.innerHTML = `<span class="material-symbols-outlined">shopping_cart</span><span id="uw-cart-count" class="ml-1 font-bold">0</span>`;
-  document.body.appendChild(btn);
-}
-
 function showToast(message, timeout = 1800) {
   const t = document.createElement("div");
-  t.className = "fixed right-6 bottom-20 z-60 bg-black/80 text-white px-4 py-2 rounded-lg";
+  t.className = "fixed right-6 top-20 z-60 bg-black/80 text-white px-4 py-2 rounded-lg";
   t.textContent = message;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), timeout);
