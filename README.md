@@ -4,7 +4,7 @@
 
 # tugas kelompok
 tema: Aplikasi Penjualan produk sepeda listrik
-tech: figma, html, css, js
+tech: figma, html, tailwind css, vanila js
 
 nama toko: Ebike.ID / Ebike Store
 
